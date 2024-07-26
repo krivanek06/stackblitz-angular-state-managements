@@ -7,9 +7,8 @@ import 'zone.js';
   standalone: true,
   template: `
     <h1>Hello from {{ name }}!</h1>
-    <a target="_blank" href="https://angular.dev/overview">
-      Learn more about Angular
-    </a>
+    <a target="_blank" href="https://angular.dev/overview"> Learn more about Angular </a>
+    lol aa
   `,
 })
 export class App {
