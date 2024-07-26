@@ -6,10 +6,10 @@ import { Message, User } from '../api/types';
 @Injectable({
   providedIn: 'root',
 })
-export class StateSubjectsSeparated {
+export class StateSubjects {
   private apiService = inject(ApiService);
 
-  /** Application State -------------------------------------------------- */
+  /** ----------------------(Private) Application State---------------------------- */
 
   /** state of loaded users */
   readonly #users$ = new BehaviorSubject<User[]>([]);
@@ -20,14 +20,14 @@ export class StateSubjectsSeparated {
   /** whether a user is selected */
   readonly #selectedUser$ = new BehaviorSubject<User | null>(null);
 
-  /** Exposed State -------------------------------------------------- */
+  /** -----------------------(Public-Readonly) Exposed State--------------------------- */
 
-  public readonly users$ = this.#users$.asObservable();
-  public readonly messages$ = this.#messages$.asObservable();
-  public readonly selectedUser$ = this.#selectedUser$.asObservable();
+  readonly users$ = this.#users$.asObservable();
+  readonly messages$ = this.#messages$.asObservable();
+  readonly selectedUser$ = this.#selectedUser$.asObservable();
 
   /** contains messages per selected user */
-  public readonly messagesPerSelectedUser$ = this.#selectedUser$.pipe(
+  readonly messagesPerSelectedUser$ = this.#selectedUser$.pipe(
     switchMap((selectedUser) =>
       this.#messages$.pipe(map((messages) => messages.filter((m) => m.userId === selectedUser?.userId)))
     ),
@@ -46,14 +46,14 @@ export class StateSubjectsSeparated {
     return this.#selectedUser$.getValue();
   }
 
-  /** Public Methods -------------------------------------------------- */
+  /** ----------------------Public Methods---------------------------- */
 
   addMessage(message: Message) {
     this.#messages$.next([...this.#messages$.getValue(), message]);
   }
 
   removeMessage(messageId: number) {
-    this.#messages$.next(this.#messages$.getValue().filter((d) => d.messageId !== messageId));
+    this.#messages$.next(this.#messages$.getValue().filter((message) => message.messageId !== messageId));
   }
 
   selecteUser(user: User | null) {
