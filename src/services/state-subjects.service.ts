@@ -29,7 +29,7 @@ export class StateSubjects {
   /** contains messages per selected user */
   readonly messagesPerSelectedUser$ = this.#selectedUser$.pipe(
     switchMap((selectedUser) =>
-      this.#messages$.pipe(map((messages) => messages.filter((m) => m.userId === selectedUser?.userId)))
+      this.#messages$.pipe(map((messages) => messages.filter((m) => m.user.userId === selectedUser?.userId)))
     ),
     shareReplay({ bufferSize: 1, refCount: false })
   );

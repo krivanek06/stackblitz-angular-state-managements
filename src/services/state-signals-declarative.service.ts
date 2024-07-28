@@ -78,7 +78,7 @@ export class StateSignalsDeclarativeService {
         messages: state.messages,
         selectedUser: state.selectedUser,
         messagesPerSelectedUser: state.messages.filter(
-          (message) => message.userId === state.selectedUser?.userId
+          (message) => message.user.userId === state.selectedUser?.userId
         ),
       }))
     ),

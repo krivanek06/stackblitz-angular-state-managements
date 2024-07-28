@@ -28,7 +28,7 @@ export class StateSignals {
   /** contains messages per selected user */
   public readonly messagesPerSelectedUser$ = computed(() => {
     const selectedUserId = this.selectedUser()?.userId;
-    return this.#messages().filter((message) => message.messageId === selectedUserId);
+    return this.#messages().filter((message) => message.user.userId === selectedUserId);
   });
 
   /** ----------------------Public Methods---------------------------- */

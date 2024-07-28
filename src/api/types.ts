@@ -7,7 +7,7 @@ export type User = {
 
 export type Message = {
   messageId: number;
-  userId: number;
+  user: User;
   message: string;
   date: string;
 };
@@ -42,7 +42,7 @@ export const randomMessages = Array.from({ length: 30 }).map(
   (_, index) =>
     ({
       messageId: index,
-      userId: gerRandomItem(randomUsers).userId,
+      user: gerRandomItem(randomUsers),
       message: faker.lorem.paragraph({ min: 1, max: 3 }),
       date: new Date().toString(),
     } satisfies Message)
