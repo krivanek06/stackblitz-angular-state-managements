@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
+import { StateSignalsDeclarativeService } from './services/state-signals-declarative.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  template: `
-    <h1>Hello from {{ name }}!</h1>
-    <a target="_blank" href="https://angular.dev/overview"> Learn more about Angular </a>
-  `,
+  template: ` <a target="_blank" href="https://angular.dev/overview"> Learn more about Angular </a> `,
 })
 export class App {
-  name = 'Angular';
+  private stateSignalDeclarative = inject(StateSignalsDeclarativeService);
+
+  stateSignalDeclarativeEff = effect(() => {
+    console.log('stateSignalDeclarative', this.stateSignalDeclarative.state());
+  });
 }
 
 bootstrapApplication(App);

@@ -29,6 +29,15 @@ export const randomUsers = Array.from({ length: 8 }).map(
     } satisfies User)
 );
 
+export const getRandomIndex = (max: number): number => {
+  return Math.floor(Math.random() * max);
+};
+
+export const gerRandomItem = <T>(items: T[]): T => {
+  const index = getRandomIndex(items.length);
+  return items[index];
+};
+
 export const randomMessages = Array.from({ length: 30 }).map(
   (_, index) =>
     ({
@@ -38,12 +47,3 @@ export const randomMessages = Array.from({ length: 30 }).map(
       date: new Date().toString(),
     } satisfies Message)
 );
-
-export const gerRandomItem = <T>(items: T[]): T => {
-  const index = getRandomIndex(items.length);
-  return items[index];
-};
-
-export const getRandomIndex = (max: number): number => {
-  return Math.floor(Math.random() * max);
-};

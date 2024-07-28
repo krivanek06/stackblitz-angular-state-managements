@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, map, shareReplay, switchMap } from 'rxjs';
 import { ApiService } from '../api/api.service';
-import { BehaviorSubject, filter, map, of, shareReplay, switchMap } from 'rxjs';
 import { Message, User } from '../api/types';
 
 @Injectable({
@@ -56,7 +56,7 @@ export class StateSubjects {
     this.#messages$.next(this.#messages$.getValue().filter((message) => message.messageId !== messageId));
   }
 
-  selecteUser(user: User | null) {
+  setSelectedUser(user: User | null) {
     this.#selectedUser$.next(user);
   }
 

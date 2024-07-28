@@ -41,7 +41,7 @@ export class StateSignals {
     this.#messages.set(this.#messages().filter((message) => message.messageId !== messageId));
   }
 
-  selecteUser(user: User | null) {
+  setSelectedUser(user: User | null) {
     this.#selectedUser.set(user);
   }
 
