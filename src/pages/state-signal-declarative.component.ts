@@ -10,11 +10,13 @@ import { StateSignalsDeclarativeService } from '../services/state-signals-declar
   standalone: true,
   imports: [UserSelectComponent, MessageItemComponent, MessageInputComponent],
   template: `
+    <h2>State Signal Declarative</h2>
+
     <app-user-select [users]="appState().users" (userClick)="onUserChange($event)" />
 
     <app-message-input (messageEnter)="onMessage($event)" />
 
-    <h2 class="text-xl my-2 text-sky-500">Messages</h2>
+    <h2>Messages</h2>
 
     @for(message of displayMessage(); track message.messageId){
     <app-message-item [message]="message" (removeClick)="onRemoveMessage(message)" />
@@ -26,6 +28,7 @@ export class StateSignalsDeclarativeComponent {
   private stateService = inject(StateSignalsDeclarativeService);
 
   appState = this.stateService.state;
+
   displayMessage = computed(() =>
     this.appState().selectedUser ? this.appState().messagesPerSelectedUser : this.appState().messages
   );

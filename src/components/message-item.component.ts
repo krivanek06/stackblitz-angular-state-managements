@@ -9,7 +9,9 @@ import { Message } from '../api/types';
   template: `
     <div class="mb-3 border rounded-lg border-gray-400 bg-gray-200 p-3">
       <div class="flex items-center justify-between">
-        <div class="text-gray-500">{{ message().user.name }} | {{ message().date | date : 'MMMM d, y' }}</div>
+        <div class="text-gray-500">
+          {{ message().user.name }} | {{ message().date | date : 'MMMM d, y, HH:mm:ss' }}
+        </div>
         <div
           (click)="onRemoveClick()"
           class="px-4 py-2 hover:bg-gray-300 rounded-lg cursor-pointer text-red-400"

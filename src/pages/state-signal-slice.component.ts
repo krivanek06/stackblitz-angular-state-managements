@@ -3,14 +3,14 @@ import { Message, User } from '../api/types';
 import { MessageInputComponent } from '../components/message-input.component';
 import { MessageItemComponent } from '../components/message-item.component';
 import { UserSelectComponent } from '../components/user-select.component';
-import { StateNgrx } from '../services/state-ngrx';
+import { StateSignalSlice } from '../services/state-signal-slice.service';
 
 @Component({
-  selector: 'app-state-ngrx',
+  selector: 'app-state-signal-slice',
   standalone: true,
   imports: [UserSelectComponent, MessageItemComponent, MessageInputComponent],
   template: `
-    <h2>State NgRx</h2>
+    <h2>State Signal Slice</h2>
 
     <app-user-select [users]="appState.users()" (userClick)="onUserChange($event)" />
 
@@ -23,12 +23,11 @@ import { StateNgrx } from '../services/state-ngrx';
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [StateNgrx],
 })
-export class StateNgrxComponent {
-  private stateService = inject(StateNgrx);
+export class StateSignalSliceComponent {
+  private stateService = inject(StateSignalSlice);
 
-  appState = this.stateService;
+  appState = this.stateService.stateSignalSlice;
 
   displayMessage = computed(() =>
     this.appState.selectedUser() ? this.appState.messagesPerSelectedUser() : this.appState.messages()

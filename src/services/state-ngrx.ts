@@ -1,4 +1,5 @@
 import { computed, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
 import { ApiService } from '../api/api.service';
 import { Message, User } from '../api/types';
@@ -40,6 +41,12 @@ export const StateNgrx = signalStore(
         apiService.getMessages().subscribe((messages) => {
           patchState(store, { messages });
         });
+        apiService
+          .listenOnRandomMessages()
+          .pipe(takeUntilDestroyed())
+          .subscribe((message) => {
+            patchState(store, { messages: [message, ...store.messages()] });
+          });
       },
     };
   })

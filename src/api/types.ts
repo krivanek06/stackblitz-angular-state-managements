@@ -48,12 +48,12 @@ export const gerRandomItem = <T>(items: T[]): T => {
   return items[index];
 };
 
-export const randomMessages = Array.from({ length: 30 }).map(
-  () =>
-    ({
-      messageId: randomId(),
-      user: gerRandomItem(randomUsers),
-      message: faker.lorem.paragraph({ min: 1, max: 3 }),
-      date: new Date().toString(),
-    } satisfies Message)
-);
+export const randomMessage = () =>
+  ({
+    messageId: randomId(),
+    user: gerRandomItem(randomUsers),
+    message: faker.lorem.paragraph({ min: 1, max: 3 }),
+    date: new Date().toString(),
+  } satisfies Message);
+
+export const randomMessages = Array.from({ length: 30 }).map(() => randomMessage());
