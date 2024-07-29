@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
 import { stateSignalsDeclarative } from './components/message-item/state-signal-declarative.component';
+import { provideStore } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -15,4 +16,6 @@ import { stateSignalsDeclarative } from './components/message-item/state-signal-
 })
 export class App {}
 
-bootstrapApplication(App);
+bootstrapApplication(App, {
+    providers: [provideStore()]
+});
