@@ -1,15 +1,15 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { StateSignalsDeclarativeService } from '../../services/state-signals-declarative.service';
+import { StateNgrx } from '../../services/state-ngrx';
 
 @Component({
-  selector: 'app-state-signal-declarative',
+  selector: 'app-state-ngrx',
   standalone: true,
   imports: [FormsModule, DatePipe],
   template: `
     <select (change)="onUserChange($event)">
-      @for(user of appState().users; track user.userId){
+      @for(user of appState.users(); track user.userId){
       <option [value]="user.userId">{{ user.name }}</option>
       }
       <option [value]="null">Reset</option>
@@ -25,27 +25,28 @@ import { StateSignalsDeclarativeService } from '../../services/state-signals-dec
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [StateNgrx],
 })
-export class StateSignalsDeclarativeComponent {
-  private stateService = inject(StateSignalsDeclarativeService);
+export class StateNgrxComponent {
+  private stateService = inject(StateNgrx);
 
-  appState = this.stateService.state;
+  appState = this.stateService;
+
   displayMessage = computed(() => {
-    const state = this.appState();
-    return state.selectedUser ? state.messagesPerSelectedUser : state.messages;
+    return this.appState.selectedUser() ? this.appState.messagesPerSelectedUser() : this.appState.messages();
   });
 
   onUserChange(event: Event | null) {
     if (!event) {
       // reset selected user
-      this.stateService.setSelectUser$.next(null);
+      this.appState.setSelectUser(null);
       return;
     }
 
     const userId = (event.target as HTMLSelectElement).value as string;
-    const user = this.appState().users.find((u) => u.userId === Number(userId))!;
+    const user = this.appState.users().find((u) => u.userId === Number(userId))!;
 
     // set selected user
-    this.stateService.setSelectUser$.next(user);
+    this.appState.setSelectUser(user);
   }
 }
