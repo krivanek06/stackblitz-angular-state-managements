@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import 'zone.js';
-import { StateNgrxComponent } from './components/message-item/state-ngrx.component';
-import { StateSignalsDeclarativeComponent } from './components/message-item/state-signal-declarative.component';
+import { StateNgrxComponent } from './pages/state-ngrx.component';
+import { StateSignalsDeclarativeComponent } from './pages/state-signal-declarative.component';
 
 @Component({
   selector: 'app-root',

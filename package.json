@@ -17,6 +17,7 @@
     "@faker-js/faker": "^8.4.1",
     "@ngrx/signals": "^18.0.0",
     "@ngrx/store": "^18.0.1",
+    "ngxtension": "^4.0.0",
     "rxjs": "^7.8.1",
     "tslib": "^2.5.0",
     "zone.js": "~0.14.0"
