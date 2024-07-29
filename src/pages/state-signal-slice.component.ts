@@ -34,7 +34,7 @@ export class StateSignalSliceComponent {
   );
 
   onUserChange(user: User | null) {
-    this.appState.setSelectUser(user);
+    this.appState.setSelectedUser(user);
   }
 
   onMessage(message: Message) {

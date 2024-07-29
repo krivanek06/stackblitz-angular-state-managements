@@ -18,17 +18,18 @@ import { User } from '../api/types';
 })
 export class UserSelectComponent {
   userClick = output<User | null>();
-  users = input.required<User[]>();
+  users = input.required<User[] | null>();
 
   onUserChange(event: Event | null) {
-    if (!event) {
+    const users = this.users();
+    if (!event || !users) {
       // reset selected user
       this.userClick.emit(null);
       return;
     }
 
     const userId = (event.target as HTMLSelectElement).value as string;
-    const user = this.users().find((u) => u.userId === Number(userId))!;
+    const user = users.find((u) => u.userId === Number(userId))!;
 
     // set selected user
     this.userClick.emit(user);

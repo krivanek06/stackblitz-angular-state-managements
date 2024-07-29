@@ -3,16 +3,16 @@ import { Message, User } from '../api/types';
 import { MessageInputComponent } from '../components/message-input.component';
 import { MessageItemComponent } from '../components/message-item.component';
 import { UserSelectComponent } from '../components/user-select.component';
-import { StateNgrx } from '../services/state-ngrx';
+import { StateSignals } from '../services/state-signals.service';
 
 @Component({
-  selector: 'app-state-ngrx',
+  selector: 'app-state-signal',
   standalone: true,
   imports: [UserSelectComponent, MessageItemComponent, MessageInputComponent],
   template: `
-    <h2>State NgRx</h2>
+    <h2>State Signal</h2>
 
-    <app-user-select [users]="appState.users()" (userClick)="onUserChange($event)" />
+    <app-user-select [users]="stateService.users()" (userClick)="onUserChange($event)" />
 
     <app-message-input (messageEnter)="onMessage($event)" />
 
@@ -22,27 +22,27 @@ import { StateNgrx } from '../services/state-ngrx';
     <app-message-item [message]="message" (removeClick)="onRemoveMessage(message)" />
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [StateNgrx],
-})
-export class StateNgrxComponent {
-  private stateService = inject(StateNgrx);
 
-  appState = this.stateService;
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class StateSignalComponent {
+  stateService = inject(StateSignals);
 
   displayMessage = computed(() =>
-    this.appState.selectedUser() ? this.appState.messagesPerSelectedUser() : this.appState.messages()
+    this.stateService.selectedUser()
+      ? this.stateService.messagesPerSelectedUser()
+      : this.stateService.messages()
   );
 
   onUserChange(user: User | null) {
-    this.appState.setSelectedUser(user);
+    this.stateService.setSelectedUser(user);
   }
 
   onMessage(message: Message) {
-    this.appState.addMessage(message);
+    this.stateService.addMessage(message);
   }
 
   onRemoveMessage(message: Message) {
-    this.appState.removeMessage(message.messageId);
+    this.stateService.removeMessage(message.messageId);
   }
 }

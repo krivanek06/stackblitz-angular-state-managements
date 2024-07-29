@@ -33,7 +33,7 @@ export class StateSignalSlice {
             messages: state().messages.filter((message) => message.messageId !== messageId),
           }))
         ),
-      setSelectUser: (_, action$: Observable<User | null>) =>
+      setSelectedUser: (_, action$: Observable<User | null>) =>
         action$.pipe(map((selectedUser) => ({ selectedUser }))),
     },
     selectors: (state) => ({

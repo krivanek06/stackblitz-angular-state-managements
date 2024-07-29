@@ -25,8 +25,6 @@ export class StateSubjects {
   readonly users$ = this.#users$.asObservable();
   readonly messages$ = this.#messages$.asObservable();
   readonly selectedUser$ = this.#selectedUser$.asObservable();
-
-  /** contains messages per selected user */
   readonly messagesPerSelectedUser$ = this.#selectedUser$.pipe(
     switchMap((selectedUser) =>
       this.#messages$.pipe(map((messages) => messages.filter((m) => m.user.userId === selectedUser?.userId)))
@@ -75,6 +73,10 @@ export class StateSubjects {
 
     this.apiService.getMessages().subscribe((messages) => {
       this.#messages$.next(messages);
+    });
+
+    this.apiService.listenOnRandomMessages().subscribe((message) => {
+      this.#messages$.next([message, ...this.#messages$.getValue()]);
     });
   }
 }

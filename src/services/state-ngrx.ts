@@ -16,7 +16,7 @@ export const StateNgrx = signalStore(
     removeMessage(messageId: string) {
       patchState(store, { messages: store.messages().filter((message) => message.messageId !== messageId) });
     },
-    setSelectUser(user: User | null) {
+    setSelectedUser(user: User | null) {
       patchState(store, { selectedUser: user });
     },
     getMessageById(messageId: string) {

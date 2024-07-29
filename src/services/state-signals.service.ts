@@ -21,15 +21,12 @@ export class StateSignals {
 
   /** -----------------------(Public-Readonly) Exposed State--------------------------- */
 
-  public readonly users = computed(() => this.#users());
-  public readonly messages = computed(() => this.#messages());
-  public readonly selectedUser = computed(() => this.#selectedUser());
-
-  /** contains messages per selected user */
-  public readonly messagesPerSelectedUser$ = computed(() => {
-    const selectedUserId = this.selectedUser()?.userId;
-    return this.#messages().filter((message) => message.user.userId === selectedUserId);
-  });
+  readonly users = computed(() => this.#users());
+  readonly messages = computed(() => this.#messages());
+  readonly selectedUser = computed(() => this.#selectedUser());
+  readonly messagesPerSelectedUser = computed(() =>
+    this.#messages().filter((message) => message.user.userId === this.selectedUser()?.userId)
+  );
 
   /** ----------------------Public Methods---------------------------- */
 
