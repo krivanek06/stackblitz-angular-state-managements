@@ -6,7 +6,7 @@ export type User = {
 };
 
 export type Message = {
-  messageId: number;
+  messageId: string;
   user: User;
   message: string;
   date: string;
@@ -21,13 +21,23 @@ export type ChatFeatureState = {
   selectedUser: User;
 };
 
-export const randomUsers = Array.from({ length: 8 }).map(
-  (_, index) =>
-    ({
-      userId: index,
-      name: faker.person.fullName(),
-    } satisfies User)
-);
+export const randomId = () => Math.random().toString(36).substring(7);
+
+export const currentUser: User = {
+  name: 'John Doe',
+  userId: 999,
+};
+
+export const randomUsers = [
+  ...Array.from({ length: 8 }).map(
+    (_, index) =>
+      ({
+        userId: index,
+        name: faker.person.fullName(),
+      } satisfies User)
+  ),
+  currentUser,
+];
 
 export const getRandomIndex = (max: number): number => {
   return Math.floor(Math.random() * max);
@@ -39,9 +49,9 @@ export const gerRandomItem = <T>(items: T[]): T => {
 };
 
 export const randomMessages = Array.from({ length: 30 }).map(
-  (_, index) =>
+  () =>
     ({
-      messageId: index,
+      messageId: randomId(),
       user: gerRandomItem(randomUsers),
       message: faker.lorem.paragraph({ min: 1, max: 3 }),
       date: new Date().toString(),

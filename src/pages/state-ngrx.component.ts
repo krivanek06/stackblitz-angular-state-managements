@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { User } from '../api/types';
+import { Message, User } from '../api/types';
+import { MessageInputComponent } from '../components/message-input.component';
 import { MessageItemComponent } from '../components/message-item.component';
 import { UserSelectComponent } from '../components/user-select.component';
 import { StateNgrx } from '../services/state-ngrx';
@@ -7,14 +8,16 @@ import { StateNgrx } from '../services/state-ngrx';
 @Component({
   selector: 'app-state-ngrx',
   standalone: true,
-  imports: [UserSelectComponent, MessageItemComponent],
+  imports: [UserSelectComponent, MessageItemComponent, MessageInputComponent],
   template: `
     <app-user-select [users]="appState.users()" (userClick)="onUserChange($event)" />
+
+    <app-message-input (messageEnter)="onMessage($event)" />
 
     <h2 class="text-xl my-2 text-sky-500">Messages</h2>
 
     @for(message of displayMessage(); track message.messageId){
-    <app-message-item [message]="message" />
+    <app-message-item [message]="message" (removeClick)="onRemoveMessage(message)" />
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,12 +28,19 @@ export class StateNgrxComponent {
 
   appState = this.stateService;
 
-  displayMessage = computed(() => {
-    return this.appState.selectedUser() ? this.appState.messagesPerSelectedUser() : this.appState.messages();
-  });
+  displayMessage = computed(() =>
+    this.appState.selectedUser() ? this.appState.messagesPerSelectedUser() : this.appState.messages()
+  );
 
   onUserChange(user: User | null) {
-    // set selected user
     this.appState.setSelectUser(user);
+  }
+
+  onMessage(message: Message) {
+    this.appState.addMessage(message);
+  }
+
+  onRemoveMessage(message: Message) {
+    this.appState.removeMessage(message.messageId);
   }
 }

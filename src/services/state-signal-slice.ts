@@ -14,8 +14,8 @@ export const StateSignalSlice = signalSlice({
   },
   actionSources: {
     addMessage: (state, action$: Observable<Message>) =>
-      action$.pipe(map((message) => ({ messages: [...state().messages, message] }))),
-    removeMessage: (state, action$: Observable<number>) =>
+      action$.pipe(map((message) => ({ messages: [message, ...state().messages] }))),
+    removeMessage: (state, action$: Observable<string>) =>
       action$.pipe(
         map((messageId) => ({
           messages: state().messages.filter((message) => message.messageId !== messageId),
@@ -25,7 +25,7 @@ export const StateSignalSlice = signalSlice({
       action$.pipe(map((selectedUser) => ({ selectedUser }))),
   },
   selectors: (state) => ({
-    getMessageById: () => (messageId: number) =>
+    getMessageById: () => (messageId: string) =>
       state().messages.find((message) => message.messageId === messageId),
     messagesPerSelectedUser: () =>
       state().messages.filter((message) => message.user.userId === state().selectedUser?.userId),

@@ -34,10 +34,10 @@ export class StateSignals {
   /** ----------------------Public Methods---------------------------- */
 
   addMessage(message: Message) {
-    this.#messages.set([...this.#messages(), message]);
+    this.#messages.set([message, ...this.#messages()]);
   }
 
-  removeMessage(messageId: number) {
+  removeMessage(messageId: string) {
     this.#messages.set(this.#messages().filter((message) => message.messageId !== messageId));
   }
 
@@ -45,7 +45,7 @@ export class StateSignals {
     this.#selectedUser.set(user);
   }
 
-  getMessageById(messageId: number) {
+  getMessageById(messageId: string) {
     return this.#messages().find((message) => message.messageId === messageId);
   }
 

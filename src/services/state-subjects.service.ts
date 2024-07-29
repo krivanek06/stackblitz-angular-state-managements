@@ -49,10 +49,10 @@ export class StateSubjects {
   /** ----------------------Public Methods---------------------------- */
 
   addMessage(message: Message) {
-    this.#messages$.next([...this.#messages$.getValue(), message]);
+    this.#messages$.next([message, ...this.#messages$.getValue()]);
   }
 
-  removeMessage(messageId: number) {
+  removeMessage(messageId: string) {
     this.#messages$.next(this.#messages$.getValue().filter((message) => message.messageId !== messageId));
   }
 
@@ -60,7 +60,7 @@ export class StateSubjects {
     this.#selectedUser$.next(user);
   }
 
-  getMessageById(messageId: number) {
+  getMessageById(messageId: string) {
     return this.#messages$.getValue().find((message) => message.messageId === messageId);
   }
 

@@ -10,15 +10,15 @@ export const StateNgrx = signalStore(
   }),
   withMethods((store) => ({
     addMessage(message: Message) {
-      patchState(store, { messages: [...store.messages(), message] });
+      patchState(store, { messages: [message, ...store.messages()] });
     },
-    removeMessage(messageId: number) {
+    removeMessage(messageId: string) {
       patchState(store, { messages: store.messages().filter((message) => message.messageId !== messageId) });
     },
     setSelectUser(user: User | null) {
       patchState(store, { selectedUser: user });
     },
-    getMessageById(messageId: number) {
+    getMessageById(messageId: string) {
       return store.messages().find((message) => message.messageId === messageId);
     },
   })),

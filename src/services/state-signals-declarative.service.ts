@@ -13,7 +13,7 @@ export class StateSignalsDeclarativeService {
   /** ----------------------Public Methods---------------------------- */
 
   public readonly addMessage$ = new Subject<Message>();
-  public readonly removeMessage$ = new Subject<number>();
+  public readonly removeMessage$ = new Subject<string>();
   public readonly setSelectUser$ = new Subject<User | null>();
 
   /** -----------------------(Public-Readonly) Exposed State--------------------------- */
@@ -44,7 +44,7 @@ export class StateSignalsDeclarativeService {
           }
 
           if (curr.action === 'addMessage') {
-            return { ...state, messages: [...state.messages, curr.message] };
+            return { ...state, messages: [curr.message, ...state.messages] };
           }
 
           if (curr.action === 'removeMessage') {
@@ -73,7 +73,7 @@ export class StateSignalsDeclarativeService {
         messagesPerSelectedUser: state.messages.filter(
           (message) => message.user.userId === state.selectedUser?.userId
         ),
-        getMessageById: (messageId: number) =>
+        getMessageById: (messageId: string) =>
           state.messages.find((message) => message.messageId === messageId),
       }))
     ),
@@ -83,7 +83,7 @@ export class StateSignalsDeclarativeService {
         messages: [] as Message[],
         selectedUser: null as User | null,
         messagesPerSelectedUser: [] as Message[],
-        getMessageById: (messageId: number) => undefined as Message | undefined,
+        getMessageById: (messageId: string) => undefined as Message | undefined,
       },
     }
   );

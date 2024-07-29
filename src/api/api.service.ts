@@ -7,10 +7,10 @@ import { Message, randomMessages, randomUsers, User } from './types';
 })
 export class ApiService {
   getUsers(): Observable<User[]> {
-    return of(randomUsers).pipe(delay(1000));
+    return of(randomUsers).pipe(delay(200));
   }
 
   getMessages(): Observable<Message[]> {
-    return of(randomMessages).pipe(delay(1000));
+    return of(randomMessages).pipe(delay(200));
   }
 }
