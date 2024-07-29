@@ -15,7 +15,7 @@ import { StateSignalsDeclarativeService } from '../../services/state-signals-dec
       <option [value]="null">Reset</option>
     </select>
 
-    <h2>Messages</h2>
+    <h2 class="text-xl my-2 text-sky-500">Messages</h2>
 
     @for(message of displayMessage(); track message.messageId){
     <div class="mb-3 border rounded-lg border-gray-400 bg-gray-200 p-3">

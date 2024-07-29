@@ -60,6 +60,10 @@ export class StateSubjects {
     this.#selectedUser$.next(user);
   }
 
+  getMessageById(messageId: number) {
+    return this.#messages$.getValue().find((message) => message.messageId === messageId);
+  }
+
   constructor() {
     this.preloadData();
   }

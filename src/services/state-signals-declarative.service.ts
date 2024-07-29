@@ -10,13 +10,6 @@ import { Message, User } from '../api/types';
 export class StateSignalsDeclarativeService {
   private apiService = inject(ApiService);
 
-  private readonly initialState = {
-    users: [] as User[],
-    messages: [] as Message[],
-    selectedUser: null as User | null,
-    messagesPerSelectedUser: [] as Message[],
-  } as const;
-
   /** ----------------------Public Methods---------------------------- */
 
   public readonly addMessage$ = new Subject<Message>();
@@ -80,8 +73,18 @@ export class StateSignalsDeclarativeService {
         messagesPerSelectedUser: state.messages.filter(
           (message) => message.user.userId === state.selectedUser?.userId
         ),
+        getMessageById: (messageId: number) =>
+          state.messages.find((message) => message.messageId === messageId),
       }))
     ),
-    { initialValue: this.initialState }
+    {
+      initialValue: {
+        users: [] as User[],
+        messages: [] as Message[],
+        selectedUser: null as User | null,
+        messagesPerSelectedUser: [] as Message[],
+        getMessageById: (messageId: number) => undefined as Message | undefined,
+      },
+    }
   );
 }

@@ -45,6 +45,10 @@ export class StateSignals {
     this.#selectedUser.set(user);
   }
 
+  getMessageById(messageId: number) {
+    return this.#messages().find((message) => message.messageId === messageId);
+  }
+
   constructor() {
     this.preloadData();
   }
