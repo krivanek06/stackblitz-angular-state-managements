@@ -22,7 +22,7 @@ import { StateSubjectComponent } from './pages/state-subject.component';
     <main class="max-w-[980px] grid place-content-center mt-[200px] mx-auto">
       <!-- <app-state-subject /> -->
       <!-- <app-state-signal /> -->
-      <!-- <app-state-signal-declarative /> -->
+      <app-state-signal-declarative />
       <!-- <app-state-signal-slice /> -->
       <!-- <app-state-ngrx /> -->
     </main>

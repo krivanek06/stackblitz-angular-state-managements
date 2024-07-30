@@ -58,5 +58,9 @@ export class StateSignals {
     this.apiService.getMessages().subscribe((messages) => {
       this.#messages.set(messages);
     });
+
+    this.apiService.listenOnRandomMessages().subscribe((message) => {
+      this.#messages.set([message, ...this.#messages()]);
+    });
   }
 }

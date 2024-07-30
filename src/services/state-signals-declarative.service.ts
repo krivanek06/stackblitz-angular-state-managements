@@ -28,6 +28,11 @@ export class StateSignalsDeclarativeService {
         .getMessages()
         .pipe(map((messages) => ({ messages, action: 'preloadMessages' as const }))),
 
+      // listen on random messages
+      this.apiService
+        .listenOnRandomMessages()
+        .pipe(map((message) => ({ message, action: 'addMessage' as const }))),
+
       // define actions
       this.addMessage$.pipe(map((message) => ({ action: 'addMessage' as const, message }))),
       this.removeMessage$.pipe(map((messageId) => ({ action: 'removeMessage' as const, messageId }))),
