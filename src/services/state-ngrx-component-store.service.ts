@@ -1,5 +1,5 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { ComponentStore } from '@ngrx/component-store';
+import { ComponentStore, OnStoreInit } from '@ngrx/component-store';
 import { tap } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import { Message, User } from '../api/types';
@@ -7,11 +7,14 @@ import { Message, User } from '../api/types';
 @Injectable({
   providedIn: 'root',
 })
-export class StateNgrxComponentStore extends ComponentStore<{
-  users: User[];
-  messages: Message[];
-  selectedUser: User | null;
-}> {
+export class StateNgrxComponentStore
+  extends ComponentStore<{
+    users: User[];
+    messages: Message[];
+    selectedUser: User | null;
+  }>
+  implements OnStoreInit
+{
   private apiService = inject(ApiService);
 
   constructor() {
@@ -69,4 +72,8 @@ export class StateNgrxComponentStore extends ComponentStore<{
   private readonly listenOnRandomMessages = this.effect(() =>
     this.apiService.listenOnRandomMessages().pipe(tap((message) => this.addMessage(message)))
   );
+
+  ngrxOnStoreInit() {
+    // called after store has been instantiated
+  }
 }
