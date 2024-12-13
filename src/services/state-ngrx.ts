@@ -1,15 +1,19 @@
 import { computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { delay, pipe, switchMap, tap } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import { Message, User } from '../api/types';
+
 export const StateNgrx = signalStore(
   withState({
     users: [] as User[],
     messages: [] as Message[],
     selectedUser: null as User | null,
   }),
-  withMethods((store) => ({
+  withMethods((store, apiService = inject(ApiService)) => ({
     addMessage(message: Message) {
       patchState(store, { messages: [message, ...store.messages()] });
     },
@@ -22,6 +26,20 @@ export const StateNgrx = signalStore(
     getMessageById(messageId: string) {
       return store.messages().find((message) => message.messageId === messageId);
     },
+    reloadUsers: rxMethod<void>(
+      pipe(
+        tap(() => patchState(store, { users: [] })),
+        delay(1000),
+        switchMap(() =>
+          apiService.getUsers().pipe(
+            tapResponse({
+              next: (users) => patchState(store, { users }),
+              error: console.error,
+            })
+          )
+        )
+      )
+    ),
   })),
   withComputed((store) => ({
     messagesPerSelectedUser: computed(() =>

@@ -26,8 +26,8 @@ import { StateSubjectComponent } from './pages/state-subject.component';
       <!-- <app-state-signal /> -->
       <!--<app-state-signal-declarative />-->
       <!-- <app-state-signal-slice /> -->
-      <!-- <app-state-ngrx /> -->
-      <app-state-ngrx-component-store />
+      <app-state-ngrx />
+      <!--<app-state-ngrx-component-store /> -->
     </main>
   `,
 })

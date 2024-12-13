@@ -12,7 +12,10 @@ import { StateNgrx } from '../services/state-ngrx';
   template: `
     <h2>State NgRx</h2>
 
-    <app-user-select [users]="appState.users()" (userClick)="onUserChange($event)" />
+    <div class="flex items-center gap-4">
+      <app-user-select [users]="appState.users()" (userClick)="onUserChange($event)" />
+      <button (click)="onReloadUsers()">Reload Users</button>
+    </div>
 
     <app-message-input (messageEnter)="onMessage($event)" />
 
@@ -44,5 +47,9 @@ export class StateNgrxComponent {
 
   onRemoveMessage(message: Message) {
     this.appState.removeMessage(message.messageId);
+  }
+
+  onReloadUsers() {
+    this.appState.reloadUsers();
   }
 }
